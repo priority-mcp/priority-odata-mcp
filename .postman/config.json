@@ -1,0 +1,18 @@
+{
+  "schemaVersion": "1.0.0",
+  "entities": {
+    "collections": [
+      {
+        "name": "Priority_API.postman_collection.json",
+        "path": "postman/collections/Priority_API.postman_collection.json"
+      }
+    ],
+    "environments": [
+      {
+        "name": "Priority_API.postman_environment.json",
+        "path": "postman/environments/Priority_API.postman_environment.json"
+      }
+    ]
+  }
+}
+

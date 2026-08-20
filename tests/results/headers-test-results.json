@@ -1,0 +1,36 @@
+{
+  "timestamp": "2025-12-01T11:30:51.240Z",
+  "summary": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "successRate": "100.0%"
+  },
+  "results": [
+    {
+      "name": "Language header support",
+      "status": "PASSED",
+      "details": "Query executed successfully with Accept-Language: en-US"
+    },
+    {
+      "name": "Trace header support",
+      "status": "PASSED",
+      "details": "Query executed successfully with X-App-Trace: 1"
+    },
+    {
+      "name": "Both headers support",
+      "status": "PASSED",
+      "details": "Query executed successfully with both headers enabled"
+    },
+    {
+      "name": "Language header with text fields",
+      "status": "PASSED",
+      "details": "Text query executed with Accept-Language header (404 expected)"
+    },
+    {
+      "name": "Trace header with attachments",
+      "status": "PASSED",
+      "details": "Attachments query executed with X-App-Trace header (404 expected)"
+    }
+  ]
+}

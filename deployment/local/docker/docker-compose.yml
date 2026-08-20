@@ -1,0 +1,27 @@
+name: priority-rest-api-mcp
+
+services:
+  priority-rest-api-mcp:
+    image: priority-rest-api-mcp:latest
+    build:
+      context: ../../..
+      dockerfile: deployment/local/docker/Dockerfile
+    container_name: priority-rest-api-mcp
+    ports:
+      - "3000:3000"
+    env_file:
+      - ../../../.env
+    environment:
+      - PRIORITY_AUTH_TYPE=basic
+      - PRIORITY_HTTP_TIMEOUT_MS=${PRIORITY_HTTP_TIMEOUT_MS:-30000}
+      - HTTP_HOST=${HTTP_HOST:-0.0.0.0}
+      - HTTP_PORT=${HTTP_PORT:-3000}
+      - SSE_ENABLED=${SSE_ENABLED:-false}
+      - TLS_REJECT_UNAUTHORIZED=${TLS_REJECT_UNAUTHORIZED:-false}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://127.0.0.1:3000/health', (r) => { process.exit(r.statusCode === 200 ? 0 : 1) })"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s

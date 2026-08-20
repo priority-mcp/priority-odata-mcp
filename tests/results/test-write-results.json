@@ -1,0 +1,32 @@
+{
+  "timestamp": "2025-11-29T22:29:41.383Z",
+  "summary": {
+    "total": 3,
+    "passed": 1,
+    "failed": 2,
+    "successRate": "33.3%"
+  },
+  "results": [
+    {
+      "name": "Create PART record",
+      "status": "PASSED",
+      "details": "Created TEST_MCP_1764455378983"
+    },
+    {
+      "name": "Update PART record",
+      "status": "FAILED",
+      "details": "Request failed with status code 404"
+    },
+    {
+      "name": "Create ORDER with subform",
+      "status": "FAILED",
+      "details": "Request failed with status code 400"
+    }
+  ],
+  "createdRecords": [
+    {
+      "type": "PART",
+      "key": "TEST_MCP_1764455378983"
+    }
+  ]
+}

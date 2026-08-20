@@ -1,0 +1,1186 @@
+{
+  "entityRelationships": {
+    "PORDERS": {
+      "subforms": [
+        "PORDERITEMS",
+        "PORDERITEMS_HISTORY_SUBFORM",
+        "SHIPTO",
+        "PORDORD",
+        "PORDPURDEMAND",
+        "PORDERUSER",
+        "PORDERSVER",
+        "PORDREFUSAL",
+        "PORDERTRANS",
+        "PORDERIV",
+        "LINKING",
+        "EXTFILES",
+        "PROJLINK",
+        "PORDERSTEXT",
+        "PORDERSCONT",
+        "PORDERSREMARKS",
+        "PORDPAY",
+        "INTERNALDIALOGTEXT"
+      ],
+      "keySubform": "PORDERITEMS",
+      "keyExpand": "PORDERITEMS_SUBFORM"
+    },
+    "ORDERS": {
+      "subforms": [
+        "ORDERITEMS",
+        "MATRIXSUM",
+        "DOCTODOLIST",
+        "CPROFMODEL",
+        "ORDERCPROF",
+        "ORDERSVER",
+        "SHIPTO2",
+        "ORDPORD",
+        "PROJLINK",
+        "ORDFNCBAL",
+        "ORDINVOICES",
+        "ORDINVOICEITEMS",
+        "ORDERSDOCS",
+        "LINKING",
+        "EXTFILES",
+        "ORDERSCONT",
+        "ORDERSTEXT",
+        "INTERNALDIALOGTEXT",
+        "ORDERUSER",
+        "ORDREFUSAL"
+      ],
+      "keySubform": "ORDERITEMS",
+      "keyExpand": "ORDERITEMS_SUBFORM"
+    },
+    "SUPPLIERS": {
+      "subforms": [
+        "SUPPERSONNEL",
+        "SUPPORDERS",
+        "SUPPORDERITEMS",
+        "SUPPROF",
+        "SUPPART",
+        "SUPPLIST",
+        "SUPBONUSES",
+        "SUPDESTCODES",
+        "SUPPLIERSA",
+        "SUPMSG",
+        "SUPPLIERSTEXT",
+        "INTERNALDIALOGTEXT",
+        "DOCTODOLIST",
+        "CHANGES_LOG"
+      ],
+      "keySubform": "SUPPERSONNEL",
+      "keyExpand": "SUPPERSONNEL_SUBFORM"
+    },
+    "CUSTOMERS": {
+      "subforms": [
+        "CUSTPERSONNEL",
+        "CUSTPART",
+        "CUSTPLIST",
+        "CUSTPROJECTS",
+        "CUSTDISCOUNT",
+        "CUSTPARTPRICE",
+        "CUSTPARTDISC",
+        "CUSTFAMILYDISC",
+        "CUSTDESTS",
+        "CUSTORDERS",
+        "CUSTBALANCE",
+        "CUSTOMERSA",
+        "CUSTOMERSTEXT",
+        "CUSTMSG",
+        "INTERNALDIALOGTEXT",
+        "DOCTODOLIST",
+        "CHANGES_LOG"
+      ],
+      "keySubform": "CUSTPERSONNEL",
+      "keyExpand": "CUSTPERSONNEL_SUBFORM"
+    },
+    "PART": {
+      "subforms": [
+        "PARTARC",
+        "PARTREV",
+        "PARTPARENT",
+        "PARTBALAN",
+        "PARTMNF",
+        "PARTTEXT",
+        "PART_CHANGE_LOG",
+        "DOCTODOLIST"
+      ],
+      "keySubform": "PARTBALAN"
+    },
+    "LOGPART": {
+      "subforms": [
+        "LOGCOUNTERS",
+        "PARTBALANCE",
+        "PARTTRANSLAST",
+        "LOGPARTPRICEOPTIONS",
+        "PARTINPLISTS",
+        "OPENPARTPORDERS",
+        "PARTIVLAST",
+        "MATRIX",
+        "PARTEXTFILE",
+        "PARTTEXT",
+        "INTERNALDIALOGTEXT",
+        "DOCTODOLIST",
+        "PART_CHANGE_LOG"
+      ],
+      "keySubform": "PARTBALANCE"
+    },
+    "PINVOICES": {
+      "subforms": [
+        "PINVOICEITEMS",
+        "PIVDOC",
+        "PIVDOC2",
+        "PINVOICESCONT",
+        "IVPAY",
+        "PIVORDI",
+        "PINVOICESTEXT",
+        "IVCFNCITEMS",
+        "EXTFILES",
+        "PINV_CHANGES_LOG",
+        "INTERNALDIALOGTEXT",
+        "PYINVUSER",
+        "PINVOICEREFUSAL"
+      ],
+      "keySubform": "PINVOICEITEMS",
+      "keyExpand": "PINVOICEITEMS_SUBFORM"
+    },
+    "YINVOICES": {
+      "subforms": [
+        "YINVOICEITEMS",
+        "IVYORD",
+        "MATRIXSUM",
+        "YINVOICESCONT",
+        "IVPAY",
+        "PROJLINK",
+        "PINVOICESTEXT",
+        "IVCFNCITEMS",
+        "EXTFILES",
+        "PINV_CHANGES_LOG",
+        "PYINVUSER",
+        "IVFNCTRANS",
+        "PINVOICEREFUSAL"
+      ],
+      "keySubform": "YINVOICEITEMS",
+      "keyExpand": "YINVOICEITEMS_SUBFORM"
+    },
+    "CINVOICES": {
+      "subforms": [
+        "CINVOICEITEMS",
+        "CIVDOC",
+        "CINVOICESCONT",
+        "SHIPTO2",
+        "IVPAY",
+        "IVCFNCITEMS",
+        "IVCOMITEMS",
+        "PINVOICESTEXT",
+        "EXTFILES",
+        "CUSTOBLIGO",
+        "INTERNALDIALOGTEXT",
+        "CPROFMODEL",
+        "TAXESILREPIV"
+      ],
+      "keySubform": "CINVOICEITEMS",
+      "keyExpand": "CINVOICEITEMS_SUBFORM"
+    },
+    "CURRENCIES": {
+      "subforms": [
+        "CURRHIS",
+        "CURRENCYBASKET",
+        "BANKNOTES2",
+        "LOADCURRENCY",
+        "CURRENCYLANG"
+      ],
+      "keySubform": "CURRHIS",
+      "keyExpand": "CURRHIS_SUBFORM"
+    },
+    "USERS": {
+      "subforms": [
+        "USERSYSCONST",
+        "USERPRIV",
+        "USERPRINTERS",
+        "USERPROFILES",
+        "USERGROUPS",
+        "USERENVGROUPS",
+        "CHANGES_LOG"
+      ],
+      "keySubform": "USERPRIV",
+      "keyExpand": "USERPRIV_SUBFORM"
+    },
+    "AINVOICES": {
+      "subforms": [
+        "AINVOICEITEMS",
+        "EXTFILES",
+        "AINVOICESCONT",
+        "IVPAY",
+        "IVCFNCITEMS",
+        "PINVOICESTEXT",
+        "CUSTOBLIGO",
+        "INTERNALDIALOGTEXT",
+        "CPROFMODEL"
+      ],
+      "keySubform": "AINVOICEITEMS",
+      "keyExpand": "AINVOICEITEMS_SUBFORM"
+    },
+    "EINVOICES": {
+      "subforms": [
+        "EINVOICEITEMS",
+        "EPAYMENT",
+        "EPAYMENT2",
+        "IVORDI",
+        "IVORD",
+        "IVPACK",
+        "IVPACK2",
+        "EINVOICESCONT",
+        "SHIPTO2",
+        "MATRIXSUM",
+        "PINVOICESTEXT",
+        "INTERNALDIALOGTEXT",
+        "IVEXTENDWARRANTY",
+        "GENCUSTNOTES",
+        "DOCTODOLIST",
+        "DOCTODOLISTLOG",
+        "IVCOMITEMS",
+        "EXTFILES",
+        "CUSTOBLIGO",
+        "LINKWTASK",
+        "DISTRDETAILS",
+        "IVFNCTRANS",
+        "MULTISERNMSGSDOC",
+        "CPROFMODEL",
+        "TAXESILREPIV",
+        "SEARCHDOCVERS"
+      ],
+      "keySubform": "EINVOICEITEMS",
+      "keyExpand": "EINVOICEITEMS_SUBFORM"
+    },
+    "FAMILY_LOG": {
+      "subforms": [
+        "FAMILY_LOGPART",
+        "FAMILYMALF",
+        "FAMILYSERVTYPES",
+        "FAMILYREQLABANALYSES"
+      ],
+      "keySubform": "FAMILY_LOGPART",
+      "keyExpand": "FAMILY_LOGPART_SUBFORM"
+    },
+    "FORMLIMITED": {
+      "subforms": []
+    },
+    "EFORM": {
+      "subforms": [
+        "FCLMN",
+        "FTRIG",
+        "FORMMSG",
+        "FLINK",
+        "FATFLINK",
+        "FATMENU",
+        "FORMPROG",
+        "FORMREFRESH",
+        "FORMINTERFACES",
+        "FORMEXEC",
+        "TEMPLATES",
+        "FORMWRNMSG",
+        "EXECHELPTOPIC",
+        "FORMHELP",
+        "LANGEXEC",
+        "ENTITYUPGNOTES"
+      ],
+      "keySubform": "FORMHELP"
+    },
+    "EPROG": {
+      "subforms": [
+        "PROG",
+        "PROGMENU",
+        "PROGPROG",
+        "PROGTITLE",
+        "PROGMSG",
+        "PROGFORMATS",
+        "DOCTEMPLATES",
+        "EXECHELPTOPIC",
+        "PROGHELP",
+        "LANGEXEC",
+        "ENTITYUPGNOTES"
+      ],
+      "keySubform": "PROGHELP"
+    },
+    "EREP": {
+      "subforms": [
+        "REPCLMNS",
+        "REPTABLES",
+        "REPMENU",
+        "REPPROG",
+        "REPDOC",
+        "REPTITLE",
+        "EREPHTML",
+        "EREPHTMLGRAPH",
+        "EXECHELPTOPIC",
+        "REPHELP",
+        "LANGEXEC",
+        "ENTITYUPGNOTES"
+      ],
+      "keySubform": "REPHELP"
+    },
+    "PORDERITEMS": {
+      "subformExpand": "PORDERITEMS_SUBFORM",
+      "subformOf": "PORDERS"
+    },
+    "ORDERITEMS": {
+      "subformExpand": "ORDERITEMS_SUBFORM",
+      "subformOf": "ORDERS"
+    }
+  },
+  "queryTemplates": {
+    "SUPPLIERS": {
+      "listFields": [
+        "SUPNAME",
+        "SUPDES",
+        "STATDES",
+        "PHONE",
+        "ADDRESS",
+        "STATE",
+        "COUNTRYNAME",
+        "CODE"
+      ],
+      "searchFields": [
+        "SUPNAME",
+        "SUPDES"
+      ],
+      "exportFields": [
+        "SUPNAME",
+        "SUPDES",
+        "ESUPDES",
+        "STATDES",
+        "CREATEDDATE",
+        "PHONE",
+        "FAX",
+        "EMAIL",
+        "ADDRESS",
+        "ADDRESS2",
+        "ADDRESS3",
+        "STATE",
+        "ZIP",
+        "COUNTRYNAME",
+        "CODE",
+        "SUPRANK",
+        "EMPNUM",
+        "DCMONTHS",
+        "REQDATEDAYS",
+        "SHIPMDAYS",
+        "MINPURQUANT",
+        "LANG",
+        "NSFLAG"
+      ]
+    },
+    "ACCOUNTS_PAYABLE": {
+      "listFields": [
+        "ACCNAME",
+        "ACCDES",
+        "BALANCE1",
+        "BALANCE2",
+        "BALANCE3",
+        "CODE",
+        "TRIALBALCODE",
+        "TRIALBALDES",
+        "SECNAME",
+        "COMPANYNAME"
+      ],
+      "searchFields": [
+        "ACCNAME",
+        "ACCDES"
+      ],
+      "filterFields": [
+        "ACCNAME",
+        "ACCDES",
+        "TRIALBALCODE",
+        "COMPANYNAME",
+        "ACCOUNT"
+      ]
+    },
+    "ACCOUNTS_RECEIVABLE": {
+      "listFields": [
+        "ACCNAME",
+        "ACCDES",
+        "BALANCE1",
+        "BALANCE2",
+        "BALANCE3",
+        "CODE",
+        "TRIALBALCODE",
+        "TRIALBALDES",
+        "SECNAME",
+        "COMPANYNAME"
+      ],
+      "searchFields": [
+        "ACCNAME",
+        "ACCDES"
+      ],
+      "filterFields": [
+        "ACCNAME",
+        "ACCDES",
+        "TRIALBALCODE",
+        "COMPANYNAME",
+        "ACCOUNT"
+      ]
+    },
+    "CUSTOMERS": {
+      "listFields": [
+        "CUSTNAME",
+        "CUSTDES",
+        "ECUSTDES",
+        "STATDES",
+        "PHONE",
+        "STATE",
+        "COUNTRYNAME",
+        "CODE",
+        "TAXCODE"
+      ],
+      "searchFields": [
+        "CUSTNAME",
+        "CUSTDES",
+        "ECUSTDES"
+      ],
+      "exportFields": [
+        "CUSTNAME",
+        "CUSTDES",
+        "ECUSTDES",
+        "STATDES",
+        "PHONE",
+        "FAX",
+        "ADDRESS",
+        "STATE",
+        "ZIP",
+        "COUNTRYNAME",
+        "CODE",
+        "TAXCODE",
+        "TAXDES",
+        "MAX_CREDIT",
+        "OBCODE",
+        "DCMONTHS",
+        "EMPNUM",
+        "LANG"
+      ]
+    },
+    "PART": {
+      "listFields": [
+        "PARTNAME",
+        "PARTDES",
+        "STATDES",
+        "PUNITNAME",
+        "FAMILYNAME",
+        "TYPE"
+      ],
+      "searchFields": [
+        "PARTNAME",
+        "PARTDES",
+        "EPARTDES"
+      ],
+      "exportFields": [
+        "PARTNAME",
+        "PARTDES",
+        "EPARTDES",
+        "STATDES",
+        "TYPE",
+        "PUNITNAME",
+        "FAMILYNAME",
+        "CREATEDDATE",
+        "USERLOGIN",
+        "UDATE",
+        "CONV",
+        "SCRAP",
+        "BARCODE",
+        "OWNERLOGIN"
+      ]
+    },
+    "LOGPART": {
+      "listFields": [
+        "PARTNAME",
+        "PARTDES",
+        "STATDES",
+        "PRICE",
+        "COST",
+        "LASTPRICE",
+        "PURPRICE",
+        "BASEPLPRICE",
+        "CURDATE"
+      ],
+      "searchFields": [
+        "PARTNAME",
+        "PARTDES"
+      ],
+      "exportFields": [
+        "PARTNAME",
+        "PARTDES",
+        "STATDES",
+        "TYPE",
+        "PUNITNAME",
+        "FAMILYNAME",
+        "FAMILYDES",
+        "PRICE",
+        "COST",
+        "LASTPRICE",
+        "PURPRICE",
+        "BASEPLPRICE",
+        "MINPRICE",
+        "SECONDPRICE",
+        "SECONDCOST",
+        "NSFLAG",
+        "CREATEDDATE",
+        "USERLOGIN"
+      ]
+    },
+    "ORDERS": {
+      "listFields": [
+        "ORDNAME",
+        "CUSTNAME",
+        "CDES",
+        "CURDATE",
+        "ORDSTATUSDES",
+        "TOTPRICE",
+        "DISPRICE",
+        "VAT",
+        "CODE",
+        "TOTQUANT"
+      ],
+      "searchFields": [
+        "ORDNAME",
+        "CUSTNAME",
+        "CUSTDES"
+      ],
+      "exportFields": [
+        "ORDNAME",
+        "CUSTNAME",
+        "CDES",
+        "CURDATE",
+        "ORDSTATUSDES",
+        "TOTPRICE",
+        "DISPRICE",
+        "VAT",
+        "TAXCODE",
+        "CODE",
+        "TOTQUANT",
+        "QPRICE",
+        "PERCENT",
+        "TOTPURCHASEPRICE",
+        "QPROFIT",
+        "PROFITPERCENT",
+        "DOERNAME",
+        "CURVERSION",
+        "ADVPERCENT",
+        "ADVBAL",
+        "OBFLAG"
+      ]
+    },
+    "USERS": {
+      "listFields": [
+        "USERLOGIN",
+        "USERNAME",
+        "GROUPNAME",
+        "SNAME",
+        "BUSERID"
+      ],
+      "searchFields": [
+        "USERLOGIN",
+        "USERNAME",
+        "SNAME"
+      ],
+      "exportFields": [
+        "USERLOGIN",
+        "USERNAME",
+        "GROUPNAME",
+        "SNAME",
+        "BUSERID",
+        "USERID",
+        "USER"
+      ]
+    },
+    "CURRENCIES": {
+      "listFields": [
+        "CODE",
+        "NAME",
+        "ENAME",
+        "ECODE",
+        "EXCH",
+        "EXCHQUANT",
+        "EXCHDATE",
+        "SNAME"
+      ],
+      "searchFields": [
+        "CODE",
+        "NAME",
+        "ECODE",
+        "ENAME"
+      ],
+      "exportFields": [
+        "CODE",
+        "NAME",
+        "ENAME",
+        "ECODE",
+        "SNAME",
+        "EXCH",
+        "EXCHQUANT",
+        "EXCHDATE",
+        "NAME2",
+        "ENAME2",
+        "POS",
+        "CURRENCY"
+      ]
+    },
+    "PORDERS": {
+      "listFields": [
+        "ORDNAME",
+        "SUPNAME",
+        "CDES",
+        "CURDATE",
+        "STATDES",
+        "TOTPRICE",
+        "DISPRICE",
+        "VAT",
+        "CODE",
+        "TOTQUANT"
+      ],
+      "searchFields": [
+        "ORDNAME",
+        "SUPNAME"
+      ],
+      "exportFields": [
+        "ORDNAME",
+        "SUPNAME",
+        "CDES",
+        "CURDATE",
+        "STATDES",
+        "TOTPRICE",
+        "DISPRICE",
+        "VAT",
+        "CODE",
+        "TOTQUANT",
+        "QPRICE",
+        "PERCENT",
+        "TAXCODE",
+        "ADVPERCENT",
+        "ADVBAL",
+        "DETAILS",
+        "CURVERSION"
+      ]
+    },
+    "PINVOICES": {
+      "listFields": [
+        "IVNUM",
+        "SUPNAME",
+        "SUPDES",
+        "ORDNAME",
+        "IVDATE",
+        "STATDES",
+        "TOTPRICE",
+        "CODE"
+      ],
+      "searchFields": [
+        "IVNUM",
+        "SUPNAME",
+        "ORDNAME"
+      ],
+      "exportFields": [
+        "IVNUM",
+        "SUPNAME",
+        "SUPDES",
+        "ORDNAME",
+        "IVDATE",
+        "STATDES",
+        "TOTPRICE",
+        "DISPRICE",
+        "VAT",
+        "CODE",
+        "TOTQUANT",
+        "QPRICE",
+        "DISCOUNT",
+        "CALPRICE",
+        "DIFF",
+        "WTAX",
+        "AFTERWTAX",
+        "FNCNUM",
+        "BOOKNUM",
+        "DOCNO",
+        "PAYDATE",
+        "DEBIT",
+        "FINAL",
+        "TYPEDBYLOGIN",
+        "TYPEDDATE",
+        "CASHPAYMENT",
+        "DIFF2",
+        "TOTPRICE2",
+        "ADJPRICEFLAG",
+        "OWNERLOGIN"
+      ]
+    },
+    "YINVOICES": {
+      "listFields": [
+        "IVNUM",
+        "SUPNAME",
+        "CDES",
+        "ORDNAME",
+        "IVDATE",
+        "STATDES",
+        "TOTPRICE",
+        "CODE"
+      ],
+      "searchFields": [
+        "IVNUM",
+        "SUPNAME",
+        "ORDNAME"
+      ],
+      "exportFields": [
+        "IVNUM",
+        "SUPNAME",
+        "CDES",
+        "ORDNAME",
+        "IVDATE",
+        "STATDES",
+        "TOTPRICE",
+        "DISPRICE",
+        "VAT",
+        "CODE",
+        "TOTQUANT",
+        "QPRICE",
+        "DISCOUNT",
+        "DIFF",
+        "CALPRICE",
+        "WTAX",
+        "AFTERWTAX",
+        "FNCNUM",
+        "BOOKNUM",
+        "PAYDATE",
+        "DEBIT",
+        "FINAL",
+        "TYPEDBYLOGIN",
+        "TYPEDDATE",
+        "TOWARHSNAME",
+        "LOCNAME",
+        "DETAILS",
+        "ADJPRICEFLAG",
+        "OWNERLOGIN"
+      ]
+    },
+    "CINVOICES": {
+      "listFields": [
+        "IVNUM",
+        "CUSTNAME",
+        "CDES",
+        "IVDATE",
+        "STATDES",
+        "TOTPRICE",
+        "CODE",
+        "ORDNAME"
+      ],
+      "searchFields": [
+        "IVNUM",
+        "CUSTNAME",
+        "CDES",
+        "ORDNAME"
+      ],
+      "exportFields": [
+        "IVNUM",
+        "CUSTNAME",
+        "CDES",
+        "NAME",
+        "IVDATE",
+        "STATDES",
+        "TOTPRICE",
+        "DISPRICE",
+        "VAT",
+        "CODE",
+        "TOTQUANT",
+        "QPRICE",
+        "DISCOUNT",
+        "PERCENT",
+        "TAXCODE",
+        "PROJDOCNO",
+        "PROJDES",
+        "DETAILS",
+        "FNCNUM",
+        "CASHPAYMENT",
+        "DIFF",
+        "AFTERWTAX",
+        "TOTPRICE2",
+        "DEBIT",
+        "FINAL",
+        "ADJPRICEFLAG",
+        "OWNERLOGIN",
+        "TYPEDBYLOGIN",
+        "TYPEDDATE"
+      ]
+    },
+    "EINVOICES": {
+      "listFields": [
+        "IVNUM",
+        "CUSTNAME",
+        "CDES",
+        "IVDATE",
+        "STATDES",
+        "TOTPRICE",
+        "CODE",
+        "ORDNAME",
+        "FINAL",
+        "DEBIT",
+        "IVTYPE"
+      ],
+      "searchFields": [
+        "IVNUM",
+        "CUSTNAME",
+        "CDES"
+      ],
+      "exportFields": [
+        "IVNUM",
+        "CUSTNAME",
+        "CDES",
+        "NAME",
+        "IVDATE",
+        "STATDES",
+        "TOTPRICE",
+        "DISPRICE",
+        "VAT",
+        "CODE",
+        "FINAL",
+        "QPRICE",
+        "DISCOUNT",
+        "PERCENT",
+        "TAXCODE",
+        "DETAILS",
+        "FNCNUM",
+        "CASHPAYMENT",
+        "CALQPRICE",
+        "REMPRICE",
+        "PAYDATE",
+        "WARHSNAME",
+        "LOCNAME",
+        "CASHNAME",
+        "ORDNAME",
+        "EMAIL",
+        "MWEIGHT",
+        "WEIGHT",
+        "WEIGHTDIFF",
+        "NWEIGHT",
+        "VOLUME",
+        "VUNITNAME",
+        "IVRECONDATE"
+      ]
+    },
+    "PORDERITEMS": {
+      "listFields": [
+        "ORDI",
+        "PARTNAME",
+        "PDES",
+        "TQUANT",
+        "PRICE",
+        "TOTPRICE",
+        "ICODE"
+      ],
+      "searchFields": [
+        "ORDNAME",
+        "PARTNAME"
+      ]
+    },
+    "ORDERITEMS": {
+      "listFields": [
+        "ORDI",
+        "PARTNAME",
+        "PDES",
+        "TQUANT",
+        "PRICE",
+        "TOTPRICE",
+        "ICODE"
+      ],
+      "searchFields": [
+        "ORDNAME",
+        "PARTNAME"
+      ]
+    },
+    "PINVOICEITEMS": {
+      "listFields": [
+        "IVORDI",
+        "PARTNAME",
+        "PDES",
+        "TQUANT",
+        "PRICE",
+        "TOTPRICE",
+        "ICODE"
+      ],
+      "searchFields": [
+        "PARTNAME"
+      ]
+    },
+    "YINVOICEITEMS": {
+      "listFields": [
+        "IVORDI",
+        "PARTNAME",
+        "PDES",
+        "TQUANT",
+        "PRICE",
+        "TOTPRICE",
+        "ICODE"
+      ],
+      "searchFields": [
+        "PARTNAME"
+      ]
+    },
+    "CINVOICEITEMS": {
+      "listFields": [
+        "IVORDI",
+        "PARTNAME",
+        "PDES",
+        "TQUANT",
+        "PRICE",
+        "TOTPRICE",
+        "ICODE"
+      ],
+      "searchFields": [
+        "PARTNAME"
+      ]
+    },
+    "SUPPERSONNEL": {
+      "listFields": [
+        "NAME",
+        "FIRSTNAME",
+        "LASTNAME",
+        "EMAIL",
+        "PHONE",
+        "CELLPHONE",
+        "POSITIONDES",
+        "STATDES"
+      ],
+      "searchFields": [
+        "NAME",
+        "EMAIL"
+      ]
+    },
+    "CUSTPERSONNEL": {
+      "listFields": [
+        "NAME",
+        "FIRSTNAME",
+        "LASTNAME",
+        "EMAIL",
+        "PHONE",
+        "CELLPHONE",
+        "POSITIONDES",
+        "STATDES"
+      ],
+      "searchFields": [
+        "NAME",
+        "EMAIL"
+      ]
+    },
+    "CURRHIS": {
+      "listFields": [
+        "CURDATE",
+        "EXCH",
+        "EXCHQUANT"
+      ],
+      "searchFields": [
+        "CURDATE"
+      ]
+    },
+    "USERPRIV": {
+      "listFields": [
+        "USERID",
+        "WINDOWSLOGIN",
+        "EMAIL",
+        "REST",
+        "ADMINUSERS",
+        "ACTIVE"
+      ],
+      "searchFields": [
+        "EMAIL"
+      ]
+    },
+    "AINVOICES": {
+      "listFields": [
+        "IVNUM",
+        "CUSTNAME",
+        "CDES",
+        "IVDATE",
+        "STATDES",
+        "TOTPRICE",
+        "CODE",
+        "ORDNAME",
+        "FINAL"
+      ],
+      "searchFields": [
+        "IVNUM",
+        "CUSTNAME",
+        "CDES",
+        "ORDNAME"
+      ],
+      "exportFields": [
+        "IVNUM",
+        "CUSTNAME",
+        "CDES",
+        "NAME",
+        "IVDATE",
+        "STATDES",
+        "TOTPRICE",
+        "DISPRICE",
+        "VAT",
+        "CODE",
+        "TOTQUANT",
+        "QPRICE",
+        "DISCOUNT",
+        "PERCENT",
+        "TAXCODE",
+        "PROJDOCNO",
+        "PROJDES",
+        "DETAILS",
+        "FNCNUM",
+        "AFTERWTAX",
+        "DEBIT",
+        "IVTYPE",
+        "FINAL",
+        "OWNERLOGIN"
+      ]
+    },
+    "FAMILY_LOG": {
+      "listFields": [
+        "FAMILYNAME",
+        "FAMILYDESC",
+        "EFAMILYDES",
+        "TECHFLAG",
+        "SELLFLAG",
+        "INACTIVE"
+      ],
+      "searchFields": [
+        "FAMILYNAME",
+        "FAMILYDESC",
+        "EFAMILYDES"
+      ],
+      "exportFields": [
+        "FAMILYNAME",
+        "FAMILYDESC",
+        "EFAMILYDES",
+        "TECHFLAG",
+        "DEBITFLAG",
+        "PROJPROCESS",
+        "TECHNICIANLOGIN",
+        "FTCODE",
+        "FTNAME",
+        "DISTRFLAG",
+        "DUTYPERCENT",
+        "SELLFLAG",
+        "NEGBALFLAG",
+        "FORECAST",
+        "PARTNAME",
+        "PARTDES",
+        "INACTIVE",
+        "METERFLAG",
+        "FAMILY"
+      ]
+    },
+    "FORMLIMITED": {
+      "listFields": [
+        "ENAME",
+        "TITLE",
+        "RESTFLAG",
+        "LIMITFLAG",
+        "TYPE"
+      ],
+      "searchFields": [
+        "ENAME",
+        "TITLE"
+      ],
+      "exportFields": [
+        "ENAME",
+        "TITLE",
+        "RESTFLAG",
+        "LIMITFLAG",
+        "TYPE",
+        "USERLOGIN",
+        "UDATE",
+        "EXEC"
+      ]
+    },
+    "EFORM": {
+      "listFields": [
+        "ENAME",
+        "TITLE",
+        "TNAME",
+        "EDES",
+        "MODULENAME"
+      ],
+      "searchFields": [
+        "ENAME",
+        "TITLE"
+      ],
+      "exportFields": [
+        "ENAME",
+        "TITLE",
+        "TNAME",
+        "ZOOM",
+        "EDES",
+        "MODULENAME",
+        "HDATE"
+      ]
+    },
+    "FORMHELP": {
+      "listFields": [
+        "htmltext"
+      ]
+    },
+    "EPROG": {
+      "listFields": [
+        "ENAME",
+        "TITLE",
+        "EDES",
+        "MODULENAME"
+      ],
+      "searchFields": [
+        "ENAME",
+        "TITLE"
+      ],
+      "exportFields": [
+        "ENAME",
+        "TITLE",
+        "EDES",
+        "MODULENAME",
+        "PROGDES",
+        "HDATE"
+      ]
+    },
+    "PROGHELP": {
+      "listFields": [
+        "text"
+      ]
+    },
+    "EREP": {
+      "listFields": [
+        "ENAME",
+        "TITLE",
+        "EDES",
+        "MODULENAME"
+      ],
+      "searchFields": [
+        "ENAME",
+        "TITLE"
+      ],
+      "exportFields": [
+        "ENAME",
+        "TITLE",
+        "EDES",
+        "MODULENAME",
+        "REPDES",
+        "HDATE"
+      ]
+    },
+    "REPHELP": {
+      "listFields": [
+        "text"
+      ]
+    }
+  },
+  "fieldAliases": {
+    "ACCOUNTS_PAYABLE": {
+      "SUPNAME": "ACCNAME",
+      "SUPDES": "ACCDES"
+    },
+    "ACCOUNTS_RECEIVABLE": {
+      "CUSTNAME": "ACCNAME",
+      "CUSTDES": "ACCDES",
+      "CDES": "ACCDES"
+    }
+  },
+  "entityAliases": {},
+  "documentPrefixes": []
+}

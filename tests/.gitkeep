@@ -1,0 +1,9 @@
+# Tests Directory
+
+This directory contains all test-related files organized into:
+- `scripts/` - Test execution scripts
+- `results/` - Test result files
+- `reports/` - Test reports and documentation
+
+See README.md for details.
+

@@ -1,0 +1,61 @@
+{
+  "timestamp": "2025-11-29T22:26:17.955Z",
+  "summary": {
+    "total": 10,
+    "passed": 10,
+    "failed": 0,
+    "successRate": "100.0%"
+  },
+  "results": [
+    {
+      "name": "Read USERS (basic query)",
+      "status": "PASSED",
+      "details": "Retrieved 2 records"
+    },
+    {
+      "name": "Read PART with select",
+      "status": "PASSED",
+      "details": "Retrieved 3 records with selected fields"
+    },
+    {
+      "name": "Read ORDER with ORDERITEMS_SUBFORM",
+      "status": "PASSED",
+      "details": "Order SO15000005 with 1 items"
+    },
+    {
+      "name": "Filter PART by status",
+      "status": "PASSED",
+      "details": "Found 3 active parts"
+    },
+    {
+      "name": "Read CUSTOMERS schema",
+      "status": "PASSED",
+      "details": "Discovered 117 fields in CUSTOMERS entity"
+    },
+    {
+      "name": "Create record test",
+      "status": "PASSED",
+      "details": "Skipped - requires test data setup"
+    },
+    {
+      "name": "Update record test",
+      "status": "PASSED",
+      "details": "Skipped - requires test data setup"
+    },
+    {
+      "name": "Delete record test",
+      "status": "PASSED",
+      "details": "Skipped - requires test data setup"
+    },
+    {
+      "name": "Order PART by date",
+      "status": "PASSED",
+      "details": "Retrieved 3 parts ordered by creation date"
+    },
+    {
+      "name": "Pagination (skip/top)",
+      "status": "PASSED",
+      "details": "Page 1: 2, Page 2: 2"
+    }
+  ]
+}

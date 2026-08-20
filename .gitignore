@@ -1,0 +1,16 @@
+node_modules/
+dist/
+*.log
+*.zip
+.env
+.env.*
+!.env.example
+.DS_Store
+*.diff
+test-*.js
+logs/
+rt2_result.json
+data/retrieved/*
+!data/retrieved/.gitkeep
+!data/retrieved/README.md
+data/temp/

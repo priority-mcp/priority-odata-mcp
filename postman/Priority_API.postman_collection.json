@@ -1,0 +1,733 @@
+{
+	"info": {
+		"_postman_id": "priority-api-collection",
+		"name": "Priority REST API",
+		"description": "Complete collection for Priority ERP REST API (OData) operations",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "username",
+				"value": "{{priority_username}}",
+				"type": "string"
+			},
+			{
+				"key": "password",
+				"value": "{{priority_password}}",
+				"type": "string"
+			}
+		]
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Get CSRF Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Extract CSRF token and session cookie",
+									"const csrfToken = pm.response.headers.get('X-CSRF-Token');",
+									"const setCookie = pm.response.headers.get('Set-Cookie');",
+									"",
+									"if (csrfToken) {",
+									"    pm.environment.set('csrf_token', csrfToken);",
+									"    console.log('CSRF Token saved:', csrfToken);",
+									"}",
+									"",
+									"if (setCookie) {",
+									"    const cookie = setCookie.split(';')[0];",
+									"    pm.environment.set('session_cookie', cookie);",
+									"    console.log('Session cookie saved:', cookie);",
+									"}",
+									"",
+									"pm.test('CSRF token retrieved', function () {",
+									"    pm.expect(csrfToken).to.not.be.undefined;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-CSRF-Token",
+								"value": "Fetch"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{priority_base_url}}",
+							"host": [
+								"{{priority_base_url}}"
+							]
+						},
+						"description": "Get CSRF token and session cookie for write operations"
+					},
+					"response": []
+				},
+				{
+					"name": "Test Connection",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response is JSON', function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test('Service document has entities', function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('value');",
+									"    pm.expect(jsonData.value).to.be.an('array');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{priority_base_url}}?$format=json",
+							"host": [
+								"{{priority_base_url}}"
+							],
+							"query": [
+								{
+									"key": "$format",
+									"value": "json"
+								}
+							]
+						},
+						"description": "Test connection and get service document (list of all entities)"
+					},
+					"response": []
+				}
+			],
+			"description": "Authentication and connection testing"
+		},
+		{
+			"name": "System",
+			"item": [
+				{
+					"name": "Get Service Document",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{priority_base_url}}?$format=json",
+							"host": [
+								"{{priority_base_url}}"
+							],
+							"query": [
+								{
+									"key": "$format",
+									"value": "json"
+								}
+							]
+						},
+						"description": "Get list of all available entities"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Version Info",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{priority_base_url}}",
+							"host": [
+								"{{priority_base_url}}"
+							]
+						},
+						"description": "Get Priority API version and headers"
+					},
+					"response": []
+				}
+			],
+			"description": "System and metadata operations"
+		},
+		{
+			"name": "Customers",
+			"item": [
+				{
+					"name": "List Customers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{priority_base_url}}CUSTOMERS?$top=10&$format=json",
+							"host": [
+								"{{priority_base_url}}"
+							],
+							"path": [
+								"CUSTOMERS"
+							],
+							"query": [
+								{
+									"key": "$top",
+									"value": "10",
+									"description": "Limit to 10 records"
+								},
+								{
+									"key": "$format",
+									"value": "json"
+								}
+							]
+						},
+						"description": "List customers with pagination"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Customer by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{priority_base_url}}CUSTOMERS('100004')?$format=json",
+							"host": [
+								"{{priority_base_url}}"
+							],
+							"path": [
+								"CUSTOMERS('100004')"
+							],
+							"query": [
+								{
+									"key": "$format",
+									"value": "json"
+								}
+							]
+						},
+						"description": "Get specific customer by ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Search Customers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{priority_base_url}}CUSTOMERS?$filter=CUSTNAME eq 'Customer Name'&$format=json",
+							"host": [
+								"{{priority_base_url}}"
+							],
+							"path": [
+								"CUSTOMERS"
+							],
+							"query": [
+								{
+									"key": "$filter",
+									"value": "CUSTNAME eq 'Customer Name'",
+									"description": "Filter by customer name"
+								},
+								{
+									"key": "$format",
+									"value": "json"
+								}
+							]
+						},
+						"description": "Search customers by name"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Customer",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Ensure CSRF token is available",
+									"if (!pm.environment.get('csrf_token')) {",
+									"    pm.sendRequest({",
+									"        url: pm.environment.get('priority_base_url'),",
+									"        method: 'GET',",
+									"        header: {",
+									"            'X-CSRF-Token': 'Fetch'",
+									"        }",
+									"    }, function (err, res) {",
+									"        if (!err) {",
+									"            const csrfToken = res.headers.get('X-CSRF-Token');",
+									"            const setCookie = res.headers.get('Set-Cookie');",
+									"            if (csrfToken) pm.environment.set('csrf_token', csrfToken);",
+									"            if (setCookie) pm.environment.set('session_cookie', setCookie.split(';')[0]);",
+									"        }",
+									"    });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-CSRF-Token",
+								"value": "{{csrf_token}}"
+							},
+							{
+								"key": "Cookie",
+								"value": "{{session_cookie}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"CUSTNAME\": \"New Customer\",\n    \"CUSTDES\": \"Customer Description\",\n    \"EMAIL\": \"customer@example.com\"\n}"
+						},
+						"url": {
+							"raw": "{{priority_base_url}}CUSTOMERS",
+							"host": [
+								"{{priority_base_url}}"
+							],
+							"path": [
+								"CUSTOMERS"
+							]
+						},
+						"description": "Create a new customer"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Customer",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Ensure CSRF token is available",
+									"if (!pm.environment.get('csrf_token')) {",
+									"    pm.sendRequest({",
+									"        url: pm.environment.get('priority_base_url'),",
+									"        method: 'GET',",
+									"        header: {",
+									"            'X-CSRF-Token': 'Fetch'",
+									"        }",
+									"    }, function (err, res) {",
+									"        if (!err) {",
+									"            const csrfToken = res.headers.get('X-CSRF-Token');",
+									"            const setCookie = res.headers.get('Set-Cookie');",
+									"            if (csrfToken) pm.environment.set('csrf_token', csrfToken);",
+									"            if (setCookie) pm.environment.set('session_cookie', setCookie.split(';')[0]);",
+									"        }",
+									"    });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-CSRF-Token",
+								"value": "{{csrf_token}}"
+							},
+							{
+								"key": "Cookie",
+								"value": "{{session_cookie}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"CUSTDES\": \"Updated Description\",\n    \"EMAIL\": \"newemail@example.com\"\n}"
+						},
+						"url": {
+							"raw": "{{priority_base_url}}CUSTOMERS('100004')",
+							"host": [
+								"{{priority_base_url}}"
+							],
+							"path": [
+								"CUSTOMERS('100004')"
+							]
+						},
+						"description": "Update an existing customer"
+					},
+					"response": []
+				}
+			],
+			"description": "Customer operations"
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "List Orders",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{priority_base_url}}ORDERS?$top=10&$orderby=ORDDATE desc&$format=json",
+							"host": [
+								"{{priority_base_url}}"
+							],
+							"path": [
+								"ORDERS"
+							],
+							"query": [
+								{
+									"key": "$top",
+									"value": "10"
+								},
+								{
+									"key": "$orderby",
+									"value": "ORDDATE desc"
+								},
+								{
+									"key": "$format",
+									"value": "json"
+								}
+							]
+						},
+						"description": "List orders sorted by date"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Order by Number",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{priority_base_url}}ORDERS('SO18000002')?$format=json",
+							"host": [
+								"{{priority_base_url}}"
+							],
+							"path": [
+								"ORDERS('SO18000002')"
+							],
+							"query": [
+								{
+									"key": "$format",
+									"value": "json"
+								}
+							]
+						},
+						"description": "Get specific order by order number"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Order with Items (Expand)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{priority_base_url}}ORDERS('SO18000002')?$expand=ORDERITEMS_SUBFORM&$format=json",
+							"host": [
+								"{{priority_base_url}}"
+							],
+							"path": [
+								"ORDERS('SO18000002')"
+							],
+							"query": [
+								{
+									"key": "$expand",
+									"value": "ORDERITEMS_SUBFORM",
+									"description": "Expand order items subform"
+								},
+								{
+									"key": "$format",
+									"value": "json"
+								}
+							]
+						},
+						"description": "Get order with all order items"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Order Items",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{priority_base_url}}ORDERS('SO18000002')/ORDERITEMS_SUBFORM?$format=json",
+							"host": [
+								"{{priority_base_url}}"
+							],
+							"path": [
+								"ORDERS('SO18000002')",
+								"ORDERITEMS_SUBFORM"
+							],
+							"query": [
+								{
+									"key": "$format",
+									"value": "json"
+								}
+							]
+						},
+						"description": "Get order items for a specific order"
+					},
+					"response": []
+				},
+				{
+					"name": "Filter Orders by Status",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{priority_base_url}}ORDERS?$filter=ORDSTATUSDES eq 'Open'&$format=json",
+							"host": [
+								"{{priority_base_url}}"
+							],
+							"path": [
+								"ORDERS"
+							],
+							"query": [
+								{
+									"key": "$filter",
+									"value": "ORDSTATUSDES eq 'Open'",
+									"description": "Filter by order status"
+								},
+								{
+									"key": "$format",
+									"value": "json"
+								}
+							]
+						},
+						"description": "Get orders with specific status"
+					},
+					"response": []
+				}
+			],
+			"description": "Order operations"
+		},
+		{
+			"name": "Suppliers",
+			"item": [
+				{
+					"name": "List Suppliers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{priority_base_url}}SUPPLIERS?$top=10&$format=json",
+							"host": [
+								"{{priority_base_url}}"
+							],
+							"path": [
+								"SUPPLIERS"
+							],
+							"query": [
+								{
+									"key": "$top",
+									"value": "10"
+								},
+								{
+									"key": "$format",
+									"value": "json"
+								}
+							]
+						},
+						"description": "List suppliers"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Supplier by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{priority_base_url}}SUPPLIERS('200007')?$format=json",
+							"host": [
+								"{{priority_base_url}}"
+							],
+							"path": [
+								"SUPPLIERS('200007')"
+							],
+							"query": [
+								{
+									"key": "$format",
+									"value": "json"
+								}
+							]
+						},
+						"description": "Get specific supplier by ID"
+					},
+					"response": []
+				}
+			],
+			"description": "Supplier operations"
+		},
+		{
+			"name": "Parts",
+			"item": [
+				{
+					"name": "List Parts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{priority_base_url}}PART?$top=10&$format=json",
+							"host": [
+								"{{priority_base_url}}"
+							],
+							"path": [
+								"PART"
+							],
+							"query": [
+								{
+									"key": "$top",
+									"value": "10"
+								},
+								{
+									"key": "$format",
+									"value": "json"
+								}
+							]
+						},
+						"description": "List parts/items"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Part by Number",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{priority_base_url}}PART('PART001')?$format=json",
+							"host": [
+								"{{priority_base_url}}"
+							],
+							"path": [
+								"PART('PART001')"
+							],
+							"query": [
+								{
+									"key": "$format",
+									"value": "json"
+								}
+							]
+						},
+						"description": "Get specific part by part number"
+					},
+					"response": []
+				}
+			],
+			"description": "Part/Item operations"
+		}
+	],
+	"variable": [
+		{
+			"key": "priority_base_url",
+			"value": "https://your-priority-server.com/odata/Priority/tabula.ini/demo/",
+			"type": "string"
+		}
+	]
+}
+

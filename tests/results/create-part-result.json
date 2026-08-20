@@ -1,0 +1,41 @@
+{
+  "timestamp": "2025-12-01T11:38:07.591Z",
+  "operation": "create_multiple_parts",
+  "input": [
+    {
+      "partname": "test",
+      "partdes": "testSERGEI"
+    },
+    {
+      "partname": "003",
+      "partdes": "testSERGEI"
+    },
+    {
+      "partname": "002",
+      "partdes": "testSERGEI"
+    }
+  ],
+  "results": [
+    {
+      "partname": "test",
+      "success": false,
+      "reason": "Part already exists"
+    },
+    {
+      "partname": "003",
+      "success": false,
+      "reason": "Part already exists"
+    },
+    {
+      "partname": "002",
+      "success": false,
+      "reason": "Part already exists"
+    }
+  ],
+  "summary": {
+    "total": 3,
+    "successful": 0,
+    "failed": 3
+  },
+  "success": false
+}
