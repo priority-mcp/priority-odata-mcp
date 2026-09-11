@@ -1608,13 +1608,16 @@ function applyAuth(req, cfg) {
             break;
         }
         case 'pat': {
+            // Priority PAT uses Basic auth: username = token, password = literal "PAT"
+            // See https://prioritysoftware.github.io/restapi/authenticate/
             if (cfg.pat) {
-                req.headers['Authorization'] = `Bearer ${cfg.pat}`;
+                const token = Buffer.from(`${cfg.pat}:PAT`).toString('base64');
+                req.headers['Authorization'] = `Basic ${token}`;
             }
             break;
         }
         case 'oauth2': {
-            // Expect external middleware to inject bearer token via PRIORITY_PAT for now
+            // OAuth2 access tokens use Bearer (distinct from Priority PAT Basic auth)
             if (cfg.pat) {
                 req.headers['Authorization'] = `Bearer ${cfg.pat}`;
             }

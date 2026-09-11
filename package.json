@@ -8,17 +8,23 @@
     "build": "node build.js"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.29.0",
-    "axios": "^1.7.7",
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "axios": "^1.20.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
-    "express": "^4.21.1",
-    "form-data": "^4.0.5",
+    "express": "^4.22.2",
+    "form-data": "^4.0.6",
     "http-errors": "^2.0.0",
     "uuid": "^11.0.3",
     "zod": "^4.3.6"
   },
   "devDependencies": {
     "esbuild": "^0.25.0"
+  },
+  "overrides": {
+    "fast-uri": "3.1.6",
+    "hono": "4.12.25",
+    "ip-address": "10.3.1",
+    "path-to-regexp@0.1.12": "0.1.13"
   }
 }

@@ -79,10 +79,9 @@ export class PriorityMCPServer {
         this.app.use(cors(corsOptions));
         this.app.options('*', cors(corsOptions));
         this.app.use(express.json({ limit: '10mb' }));
-        // Bearer token guard — ODATA_MCP_TOKEN must be set in the environment.
-        // If absent, a random token is generated per-process and printed once at startup
-        // so the server is always protected, but operators are warned to pin a stable value.
-        const _BEARER = (() => {
+        // Bearer token guard — prefer ODATA_MCP_TOKEN from the environment (never hardcode secrets).
+        // If absent, a random token is generated per-process and printed once at startup.
+        this.mcpBearerToken = (() => {
             if (process.env.ODATA_MCP_TOKEN) return process.env.ODATA_MCP_TOKEN;
             const generated = crypto.randomUUID();
             console.warn('[security] ODATA_MCP_TOKEN is not set. A random token has been generated for this session:');
@@ -93,7 +92,7 @@ export class PriorityMCPServer {
         const _OPEN = new Set(['/', '/health', '/authorize', '/token', '/register']);
         this.app.use((req, res, next) => {
             if (_OPEN.has(req.path) || req.path.startsWith('/.well-known/')) return next();
-            if ((req.headers['authorization'] || '') === `Bearer ${_BEARER}`) return next();
+            if ((req.headers['authorization'] || '') === `Bearer ${this.mcpBearerToken}`) return next();
             return res.status(401).json({ error: 'Unauthorized' });
         });
     }
@@ -151,7 +150,8 @@ export class PriorityMCPServer {
                 }
                 pendingCodes.delete(code);
             }
-            res.json({ access_token: crypto.randomUUID(), token_type: 'Bearer', expires_in: 86400 });
+            // Must match the Bearer guard — Cursor/OAuth clients reuse this token on /mcp.
+            res.json({ access_token: this.mcpBearerToken, token_type: 'Bearer', expires_in: 86400 });
         });
 
         this.app.get('/', (req, res) => {

@@ -2,7 +2,7 @@
 
 An MCP server that connects AI assistants — Claude and others — directly to a Priority ERP system. Every OData operation (query, create, update, delete, batch, attachments, text fields) is exposed as an MCP tool, so AI agents can read and write live business data without custom integration code.
 
-**Version:** 0.2.0 · **Transport:** Streamable HTTP (SSE optional) · **Runtime:** Node.js 18 · **Tools:** 19
+**Version:** 0.2.0 · **Transport:** Streamable HTTP (SSE optional) · **Runtime:** Node.js 22 (distroless image) · **Tools:** 19
 
 ---
 
@@ -20,13 +20,22 @@ npm install
 cp .env.example .env
 ```
 
-At minimum, set these four variables:
+At minimum, set these variables (example with basic auth):
 ```env
 PRIORITY_BASE_URL=https://<host>/odata/Priority/<tabula.ini>/<company>/
 PRIORITY_AUTH_TYPE=basic
 PRIORITY_USERNAME=myuser
 PRIORITY_PASSWORD=mypassword
+ODATA_MCP_TOKEN=<strong-random-secret>
 ```
+
+For Personal Access Token (PAT) auth instead:
+```env
+PRIORITY_AUTH_TYPE=pat
+PRIORITY_PAT=<your-priority-pat>
+ODATA_MCP_TOKEN=<strong-random-secret>
+```
+Priority PAT uses HTTP Basic with `username=<token>` and password literal `PAT` (handled by the server).
 
 **3. Start the server**
 ```bash
@@ -93,8 +102,8 @@ Set `ODATA_MCP_TOKEN` in `.env`. If absent, a random UUID is generated at startu
 Controlled by `PRIORITY_AUTH_TYPE`:
 
 - `basic` — HTTP Basic auth using `PRIORITY_USERNAME` + `PRIORITY_PASSWORD`
-- `pat` — Bearer token via `PRIORITY_PAT`
-- `oauth2` — same as `pat` (pass PAT as Bearer token)
+- `pat` — Priority Personal Access Token via `PRIORITY_PAT` (sent as Basic `token:PAT`)
+- `oauth2` — OAuth2 access token via `PRIORITY_PAT` (sent as `Authorization: Bearer`)
 - `none` — no auth header (local testing only)
 
 Write operations (`POST`/`PATCH`/`DELETE`) automatically fetch and retry with an `X-CSRF-Token` header if the initial request is rejected, following Priority's CSRF protection pattern.
@@ -121,7 +130,7 @@ Copy `.env.example` to `.env`. The server searches for `.env` in order: `ENV_FIL
 | Variable | Description |
 |---|---|
 | `ODATA_MCP_TOKEN` | Bearer token protecting `/mcp`. Random UUID used if not set. |
-| `PRIORITY_PAT` | Personal Access Token (when `AUTH_TYPE=pat` or `oauth2`) |
+| `PRIORITY_PAT` | Personal Access Token when `AUTH_TYPE=pat` (Basic `token:PAT`), or OAuth2 bearer when `AUTH_TYPE=oauth2` |
 | `PRIORITY_APP_ID` | Application license ID — sent as `X-App-Id` header |
 | `PRIORITY_APP_KEY` | Application license key — sent as `X-App-Key` header |
 | `PRIORITY_LANGUAGE` | Overrides `Accept-Language` header (e.g. `en`) |
@@ -295,7 +304,7 @@ docker build -t priority-mcp .
 docker run --env-file .env -p 3000:3000 priority-mcp
 ```
 
-The Dockerfile uses `node:18-slim`, runs `npm run build` to bundle `src/` → `dist/` via esbuild, then starts `dist/index.js`. A Docker Compose setup and local TLS certificate generator are in `deployment/local/`.
+The production Dockerfile is a multi-stage build: `node:22-bookworm-slim` builder → `gcr.io/distroless/nodejs22-debian12:nonroot` runtime. A Docker Compose setup and local TLS certificate generator are in `deployment/local/`. CI runs Trivy image + filesystem scans on pull requests.
 
 ### Production checklist
 
@@ -418,7 +427,7 @@ node test-resolver.js
 
 ## Tech Stack
 
-- **Runtime:** Node.js 18, ES Modules (`"type": "module"`)
+- **Runtime:** Node.js 22, ES Modules (`"type": "module"`); production image is distroless nonroot
 - **MCP SDK:** `@modelcontextprotocol/sdk ^1.29.0`
 - **HTTP server:** `express ^4.21.1`
 - **HTTP client:** `axios ^1.7.7`
