@@ -21,8 +21,10 @@ RUN rm -rf node_modules && npm ci --omit=dev
 
 ############################
 # Stage 2 — runtime (distroless, no npm / no shell / no apt)
+# Debian 13 base: ships OpenSSL 3.5.x / glibc 2.41 (the debian12 image is stuck on vulnerable
+# libssl3 3.0.18 / libc6 2.36-9+deb12u13). Pinned by digest; bump deliberately (see #3).
 ############################
-FROM gcr.io/distroless/nodejs22-debian12:nonroot
+FROM gcr.io/distroless/nodejs22-debian13:nonroot@sha256:4e4fb0ce55fd73901600796ef079a9490369d2515d7da31633a91608c82ca13b
 
 WORKDIR /app
 

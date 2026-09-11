@@ -305,7 +305,7 @@ docker build -t priority-mcp .
 docker run --env-file .env -p 3000:3000 priority-mcp
 ```
 
-The production Dockerfile is a multi-stage build: `node:22-bookworm-slim` builder → `gcr.io/distroless/nodejs22-debian12:nonroot` runtime. A Docker Compose setup and local TLS certificate generator are in `deployment/local/`. CI runs Trivy image + filesystem scans on pull requests.
+The production Dockerfile is a multi-stage build: `node:22-bookworm-slim` builder → `gcr.io/distroless/nodejs22-debian13:nonroot` runtime (pinned by digest). A Docker Compose setup and local TLS certificate generator are in `deployment/local/`. CI runs Trivy image + filesystem scans on pull requests, and every push to `main` publishes `ghcr.io/priority-mcp/priority-odata-mcp:latest` (plus a `sha-<commit>` tag).
 
 ### Production checklist
 
