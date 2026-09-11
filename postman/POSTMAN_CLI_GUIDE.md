@@ -80,11 +80,14 @@ postman request GET "https://host.docker.internal/odata/Priority/tabula.ini/demo
     --insecure
 ```
 
-### Bearer Token (PAT)
+### Personal Access Token (PAT)
+
+Priority PATs use Basic auth: username = the token, password = the literal string `PAT`.
 
 ```powershell
 postman request GET "https://host.docker.internal/odata/Priority/tabula.ini/demo/CUSTOMERS" `
-    --auth-bearer-token "your_pat_token" `
+    --auth-basic-username "your_pat_token" `
+    --auth-basic-password "PAT" `
     --insecure
 ```
 

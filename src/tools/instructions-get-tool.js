@@ -13,7 +13,9 @@ export function registerInstructionsGetTool(registry, client) {
             authentication: {
                 summary: 'Supports Basic auth, personal access tokens (PAT), or OAuth2 bearer tokens. Supply credentials according to PRIORITY_AUTH_TYPE.',
                 headers: [
-                    'Authorization: Basic <base64(user:pass)> or Bearer <token>',
+                    'basic: Authorization: Basic <base64(user:pass)>',
+                    'pat: Authorization: Basic <base64(<PAT>:PAT)> (username = the token, password = literal "PAT")',
+                    'oauth2: Authorization: Bearer <access_token>',
                     'Optional per-application licensing headers: X-App-Id, X-App-Key'
                 ]
             },

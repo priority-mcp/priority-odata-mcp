@@ -79,9 +79,10 @@ The server uses **Streamable HTTP** as its primary transport — each `POST /mcp
 | `/sse` | POST | JSON-RPC messages for SSE clients |
 | `/health` | GET | Health check — returns version and status |
 | `/.well-known/oauth-authorization-server` | GET | OAuth 2.1 discovery (required by Claude Code ≥2.1.92) |
-| `/authorize`, `/token`, `/register` | GET/POST | OAuth 2.1 PKCE flow — auto-approves |
+| `/authorize`, `/register` | GET/POST | OAuth 2.1 PKCE flow — auto-approves |
+| `/token` | POST | OAuth 2.1 token endpoint — **requires** `Authorization: Bearer <ODATA_MCP_TOKEN>` |
 
-> **Note:** The OAuth 2.1 endpoints exist to satisfy Claude Code's Streamable HTTP connection handshake. They auto-approve all requests and are not intended for real access control — that is handled by `ODATA_MCP_TOKEN`.
+> **Note:** The OAuth 2.1 endpoints exist to satisfy Claude Code's Streamable HTTP connection handshake. They are not an access-control mechanism — that is handled by `ODATA_MCP_TOKEN`. `/token` sits behind the same Bearer guard as `/mcp`, so the OAuth flow cannot be used to obtain the token without already having it. Configure clients with the static `Authorization` header shown above.
 
 ---
 
@@ -91,7 +92,7 @@ Authentication operates at two independent layers.
 
 **Layer 1 — Protecting this server**
 
-All routes (except `/health` and OAuth endpoints) require:
+All routes (except `/`, `/health`, `/.well-known/*`, `/authorize` and `/register`) require:
 ```
 Authorization: Bearer <ODATA_MCP_TOKEN>
 ```
