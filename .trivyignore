@@ -1,11 +1,6 @@
-# OS packages in gcr.io/distroless/nodejs22-debian12:nonroot.
-# Fixed upstream in Debian openssl, but not yet rebuilt into this distroless tag.
-# Re-check periodically and remove when `trivy image` is clean without these.
-# checked 2026-09-11, fix not yet available in distroless
-#   (latest nodejs22-debian12:nonroot = sha256:13593b75..., still libssl3 3.0.18-1~deb12u2). Tracked in #3.
-CVE-2026-31789
-CVE-2026-28387
-CVE-2026-28388
-CVE-2026-28389
-CVE-2026-28390
-CVE-2026-45447
+# Trivy ignore list (one CVE/GHSA ID per line). Currently empty.
+#
+# checked 2026-09-11, fix applied: runtime base moved from nodejs22-debian12 (libssl3 3.0.18,
+#   still unpatched in distroless) to gcr.io/distroless/nodejs22-debian13:nonroot (libssl3t64 3.5.7,
+#   libc6 2.41). The six OpenSSL entries (CVE-2026-31789, -28387, -28388, -28389, -28390, -45447)
+#   were removed; Trivy reports 0 HIGH/CRITICAL on the new image. See #3.
