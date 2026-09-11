@@ -35,5 +35,8 @@ COPY --from=builder /app/package.json ./package.json
 
 EXPOSE 3000
 
+# Distroless nonroot image defaults to uid 65532; make USER explicit for scanners (DS-0002).
+USER nonroot
+
 # distroless nodejs image's entrypoint is already "node"
 CMD ["dist/index.js"]
