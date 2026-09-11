@@ -35,10 +35,7 @@ docker-compose up -d --build
 
 ## Docker Files
 
-**`docker/Dockerfile`**
-- Docker image definition
-- Builds Node.js application
-- Exposes port 3000
+The image is built from the repository-root `Dockerfile` (Node 22 multi-stage build → distroless nonroot runtime).
 
 **`docker/docker-compose.yml`**
 - Docker Compose configuration

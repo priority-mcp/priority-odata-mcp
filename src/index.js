@@ -10,5 +10,8 @@ async function main() {
     server.listen();
 }
 // eslint-disable-next-line no-console
-main().catch((err) => console.error(err));
+main().catch((err) => {
+    console.error(err);
+    process.exit(1);
+});
 

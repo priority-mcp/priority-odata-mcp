@@ -17,7 +17,7 @@ deployment/
 
 For deploying to your local machine using Docker:
 
-- **Docker Files**: `local/docker/` - Dockerfile and docker-compose.yml
+- **Docker Files**: `local/docker/` - docker-compose.yml (builds the repository-root `Dockerfile`)
 - **Scripts**: `local/scripts/` - Local deployment scripts
 - **Documentation**: `local/docs/` - Local deployment guides
 

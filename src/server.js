@@ -89,7 +89,8 @@ export class PriorityMCPServer {
             console.warn('[security] Set ODATA_MCP_TOKEN in your environment to use a stable, known token.');
             return generated;
         })();
-        const _OPEN = new Set(['/', '/health', '/authorize', '/token', '/register']);
+        // /token is intentionally NOT open: it returns the MCP bearer token, so callers must already hold it.
+        const _OPEN = new Set(['/', '/health', '/authorize', '/register']);
         this.app.use((req, res, next) => {
             if (_OPEN.has(req.path) || req.path.startsWith('/.well-known/')) return next();
             if ((req.headers['authorization'] || '') === `Bearer ${this.mcpBearerToken}`) return next();
@@ -98,7 +99,8 @@ export class PriorityMCPServer {
     }
     setupRoutes() {
         // OAuth 2.1 endpoints (required by MCP 2025-03-26 / Claude Code 2.1.92+)
-        // Implements authorization_code + PKCE flow for localhost — auto-approves, no real security needed.
+        // Implements authorization_code + PKCE flow for localhost. /authorize auto-approves, but /token sits
+        // behind the Bearer guard, so the flow never grants access to a caller without ODATA_MCP_TOKEN.
         const pendingCodes = new Map(); // code -> { redirectUri, codeChallenge }
         const httpPort = this.cfg.server.port;
         const defaultPublicHost = this.cfg.server.host === '0.0.0.0' ? 'localhost' : this.cfg.server.host;
@@ -150,7 +152,8 @@ export class PriorityMCPServer {
                 }
                 pendingCodes.delete(code);
             }
-            // Must match the Bearer guard — Cursor/OAuth clients reuse this token on /mcp.
+            // Reached only with a valid Bearer header (see guard), so this never discloses the token
+            // to an unauthenticated caller. Clients reuse it on /mcp.
             res.json({ access_token: this.mcpBearerToken, token_type: 'Bearer', expires_in: 86400 });
         });
 

@@ -74,13 +74,21 @@ Authorization: Basic {{base64_credentials}}
 
 ### Method 2: Personal Access Token (PAT)
 
+Priority PATs use HTTP **Basic** auth: the username is the token and the password is the literal string `PAT`
+(see https://prioritysoftware.github.io/restapi/authenticate/).
+
 1. In your request, go to **Authorization** tab
-2. Select **Bearer Token** from the Type dropdown
-3. Token: `{{priority_pat}}`
+2. Select **Basic Auth** from the Type dropdown
+3. Username: `{{priority_pat}}`
+4. Password: `PAT`
 
 **Manual Header Setup**:
+```javascript
+// In Postman Pre-request Script:
+pm.environment.set("pat_credentials", btoa(pm.environment.get("priority_pat") + ":PAT"));
 ```
-Authorization: Bearer {{priority_pat}}
+```
+Authorization: Basic {{pat_credentials}}
 ```
 
 ### Method 3: OAuth2
@@ -88,7 +96,7 @@ Authorization: Bearer {{priority_pat}}
 1. In your request, go to **Authorization** tab
 2. Select **OAuth 2.0** from the Type dropdown
 3. Configure according to your Priority OAuth2 setup
-4. Or use Bearer token: `Authorization: Bearer {{priority_pat}}`
+4. Or send the OAuth2 access token directly: `Authorization: Bearer <access_token>` (this is OAuth2 only — PATs use Basic, see Method 2)
 
 ## Step 4: Common Request Examples
 

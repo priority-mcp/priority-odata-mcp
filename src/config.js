@@ -28,6 +28,9 @@ export function loadConfigFromEnv() {
     const username = process.env.PRIORITY_USERNAME;
     const password = process.env.PRIORITY_PASSWORD;
     const pat = process.env.PRIORITY_PAT;
+    if (authType === 'pat' && !pat?.trim()) {
+        throw new Error('[Config] PRIORITY_AUTH_TYPE=pat but PRIORITY_PAT is not set. Set PRIORITY_PAT to your Priority Personal Access Token.');
+    }
     const appId = process.env.PRIORITY_APP_ID;
     const appKey = process.env.PRIORITY_APP_KEY;
     const language = process.env.PRIORITY_LANGUAGE;
