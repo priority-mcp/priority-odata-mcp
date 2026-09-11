@@ -1,0 +1,9 @@
+# OS packages in gcr.io/distroless/nodejs22-debian12:nonroot.
+# Fixed upstream in Debian openssl, but not yet rebuilt into this distroless tag.
+# Re-check periodically and remove when `trivy image` is clean without these.
+CVE-2026-31789
+CVE-2026-28387
+CVE-2026-28388
+CVE-2026-28389
+CVE-2026-28390
+CVE-2026-45447

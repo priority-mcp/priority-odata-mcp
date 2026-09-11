@@ -1,26 +1,36 @@
-name: priority-rest-api-mcp
+name: priority-odata-mcp
 
 services:
-  priority-rest-api-mcp:
-    image: priority-rest-api-mcp:latest
+  priority-odata-mcp:
+    image: priority-odata-mcp:latest
     build:
       context: ../../..
-      dockerfile: deployment/local/docker/Dockerfile
-    container_name: priority-rest-api-mcp
+      dockerfile: Dockerfile
+    container_name: priority-odata-mcp
     ports:
       - "3000:3000"
     env_file:
       - ../../../.env
     environment:
-      - PRIORITY_AUTH_TYPE=basic
+      # Auth type comes from .env (basic | pat | oauth2). Do not hardcode secrets here.
+      - PRIORITY_AUTH_TYPE=${PRIORITY_AUTH_TYPE:-basic}
       - PRIORITY_HTTP_TIMEOUT_MS=${PRIORITY_HTTP_TIMEOUT_MS:-30000}
       - HTTP_HOST=${HTTP_HOST:-0.0.0.0}
       - HTTP_PORT=${HTTP_PORT:-3000}
       - SSE_ENABLED=${SSE_ENABLED:-false}
       - TLS_REJECT_UNAUTHORIZED=${TLS_REJECT_UNAUTHORIZED:-false}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     restart: unless-stopped
+    # Distroless runtime has no shell; call the image entrypoint (node) directly.
     healthcheck:
-      test: ["CMD", "node", "-e", "require('http').get('http://127.0.0.1:3000/health', (r) => { process.exit(r.statusCode === 200 ? 0 : 1) })"]
+      test:
+        [
+          "CMD",
+          "/nodejs/bin/node",
+          "-e",
+          "fetch('http://127.0.0.1:3000/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))",
+        ]
       interval: 30s
       timeout: 10s
       retries: 3
