@@ -9,7 +9,7 @@ export function registerFailurePatternsPrompt(registry, client) {
                 required: false
             }
         ],
-        async buildMessages(args) {
+    }, async (args) => {
             const entity = args.entity || 'any entity';
 
             const failurePatterns = {
@@ -50,6 +50,5 @@ export function registerFailurePatternsPrompt(registry, client) {
                     }
                 ]
             };
-        }
     });
 }

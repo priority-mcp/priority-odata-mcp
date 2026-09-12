@@ -175,25 +175,62 @@ export class PriorityClient {
         return `'${String(value).replace(/'/g, "''")}'`;
     }
 
+    /**
+     * Like formatODataValue, but a JS string is always emitted as an OData string literal.
+     * Values such as CUSTNAME '1001' look numeric yet belong to a string field — emitting
+     * them bare makes Priority reject the request with 400.
+     */
+    formatODataValueStrict(value) {
+        if (typeof value === 'number' && Number.isFinite(value)) {
+            return String(value);
+        }
+        return `'${String(value).replace(/'/g, "''")}'`;
+    }
+
     async resolveEntityKey(entity, lookup) {
         const lookupEntries = Object.entries(lookup || {}).filter(([, value]) => value !== undefined && value !== null && value !== '');
         if (lookupEntries.length === 0) {
             throw createPriorityApiError('resolveEntityKey', new Error('lookup must contain at least one field'), { entity, lookup });
         }
 
-        const filter = lookupEntries
-            .map(([field, value]) => `${field} eq ${this.formatODataValue(value)}`)
+        // String values stay quoted on the first attempt; only if that finds nothing do we retry
+        // with bare numeric literals, for fields that really are numeric.
+        const buildFilter = (fmt) => lookupEntries
+            .map(([field, value]) => `${field} eq ${fmt(value)}`)
             .join(' and ');
+        const filterQuoted = buildFilter((v) => this.formatODataValueStrict(v));
+        const filterNumeric = buildFilter((v) => this.formatODataValue(v));
 
         if (typeof this.log === 'function') {
             this.log(`[KeyResolver] Resolving key for ${entity} with lookup: ${JSON.stringify(lookup)}`);
-            this.log(`[KeyResolver] Generated filter: ${filter}`);
+            this.log(`[KeyResolver] Generated filter: ${filterQuoted}`);
         }
 
-        const result = await this.runQuery(entity, { filter, top: 1 });
+        let filter = filterQuoted;
+        let result = null;
+        let firstError = null;
+        try {
+            result = await this.runQuery(entity, { filter, top: 1 });
+        } catch (error) {
+            firstError = error;
+        }
+        if (!result?.value?.[0] && filterNumeric !== filterQuoted) {
+            if (typeof this.log === 'function') {
+                this.log(`[KeyResolver] No match with quoted literals, retrying: ${filterNumeric}`);
+            }
+            try {
+                const retry = await this.runQuery(entity, { filter: filterNumeric, top: 1 });
+                if (retry?.value?.[0]) {
+                    result = retry;
+                    filter = filterNumeric;
+                }
+            } catch (retryError) {
+                if (!firstError) firstError = retryError;
+            }
+        }
         const row = result?.value?.[0];
         if (!row) {
-            throw createPriorityApiError('resolveEntityKey', new Error(`No matching record found for filter: ${filter}`), { entity, filter });
+            throw createPriorityApiError('resolveEntityKey', firstError || new Error(`No matching record found for filter: ${filter}`), { entity, filter });
         }
 
         if (typeof this.log === 'function') {
@@ -203,7 +240,7 @@ export class PriorityClient {
         // Fast path: composite lookup — all fields present in row → build composite key string
         if (lookupEntries.length > 1 && lookupEntries.every(([field]) => field in row)) {
             const compositeKey = lookupEntries
-                .map(([field]) => `${field}=${this.formatODataValue(String(row[field]))}`)
+                .map(([field]) => `${field}=${this.formatODataValueStrict(row[field])}`)
                 .join(',');
             if (typeof this.log === 'function') {
                 this.log(`[KeyResolver] Composite key resolved: ${compositeKey}`);
@@ -334,27 +371,40 @@ export class PriorityClient {
             if (candidateValue === undefined || candidateValue === null) {
                 continue;
             }
-            const candidateKeyExpr = this.formatODataValue(candidateValue);
-            if (typeof this.log === 'function') {
-                this.log(`[API Call] Trying getEntityByKey(${entity}, ${candidateKeyExpr}) using candidate field ${candidateField}`);
+            // Quoted form first: a resolved value like '1001' is a string key even though it
+            // looks numeric. Only fall back to the bare number for genuinely numeric keys.
+            const keyExprs = [this.formatODataValueStrict(candidateValue)];
+            const looseKeyExpr = this.formatODataValue(candidateValue);
+            if (looseKeyExpr !== keyExprs[0]) {
+                keyExprs.push(looseKeyExpr);
             }
 
-            try {
-                result = await this.getEntityByKey(entity, candidateKeyExpr, select, expand);
-                chosenField = candidateField;
-                chosenValue = candidateValue;
-                chosenKeyExpr = candidateKeyExpr;
-                break;
-            } catch (error) {
-                const statusCode = error?.response?.status || error?.statusCode;
-                errors.push({ candidateField, candidateValue, statusCode, message: error.message });
-                if (statusCode === 404) {
-                    if (typeof this.log === 'function') {
-                        this.log(`[API Call] candidate ${candidateField}=${candidateValue} failed with 404, trying next candidate`);
-                    }
-                    continue;
+            for (const candidateKeyExpr of keyExprs) {
+                if (typeof this.log === 'function') {
+                    this.log(`[API Call] Trying getEntityByKey(${entity}, ${candidateKeyExpr}) using candidate field ${candidateField}`);
                 }
-                throw error;
+
+                try {
+                    result = await this.getEntityByKey(entity, candidateKeyExpr, select, expand);
+                    chosenField = candidateField;
+                    chosenValue = candidateValue;
+                    chosenKeyExpr = candidateKeyExpr;
+                    break;
+                } catch (error) {
+                    const statusCode = error?.response?.status || error?.statusCode;
+                    errors.push({ candidateField, candidateValue, candidateKeyExpr, statusCode, message: error.message });
+                    if (statusCode === 404 || statusCode === 400) {
+                        if (typeof this.log === 'function') {
+                            this.log(`[API Call] candidate ${candidateField}=${candidateKeyExpr} failed with ${statusCode}, trying next key form`);
+                        }
+                        continue;
+                    }
+                    throw error;
+                }
+            }
+
+            if (result) {
+                break;
             }
         }
 

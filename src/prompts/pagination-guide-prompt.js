@@ -3,7 +3,7 @@ export function registerPaginationGuidePrompt(registry) {
         name: 'pagination_guide',
         description: 'Guide to pagination in Priority OData API. Provides best practices for $top/$skip, count queries, and handling large result sets.',
         arguments: [],
-        handler: async () => {
+    }, async () => {
             return {
                 description: 'Priority OData Pagination Guide',
                 messages: [
@@ -56,6 +56,5 @@ The OData REST API supports standard \`$top\` and \`$skip\` parameters for pagin
                     }
                 ]
             };
-        }
     });
 }
