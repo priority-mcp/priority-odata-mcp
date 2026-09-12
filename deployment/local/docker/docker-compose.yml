@@ -2,23 +2,21 @@ name: priority-odata-mcp
 
 services:
   priority-odata-mcp:
-    image: priority-odata-mcp:latest
-    build:
-      context: ../../..
-      dockerfile: Dockerfile
+    # Published by .github/workflows/publish.yml on every push to main.
+    # No build: section, so a local `docker compose up --build` cannot shadow the registry image.
+    image: ghcr.io/priority-mcp/priority-odata-mcp:latest
     container_name: priority-odata-mcp
     ports:
       - "3000:3000"
     env_file:
+      # Root .env supplies PRIORITY_* / ODATA_MCP_TOKEN / etc.
+      # Do not re-declare those under environment with ${VAR:-default}:
+      # Compose interpolates from the compose-dir/.env / shell, which would
+      # override env_file and wipe values like PRIORITY_AUTH_TYPE=pat.
       - ../../../.env
     environment:
-      # Auth type comes from .env (basic | pat | oauth2). Do not hardcode secrets here.
-      - PRIORITY_AUTH_TYPE=${PRIORITY_AUTH_TYPE:-basic}
-      - PRIORITY_HTTP_TIMEOUT_MS=${PRIORITY_HTTP_TIMEOUT_MS:-30000}
-      - HTTP_HOST=${HTTP_HOST:-0.0.0.0}
-      - HTTP_PORT=${HTTP_PORT:-3000}
-      - SSE_ENABLED=${SSE_ENABLED:-false}
-      - TLS_REJECT_UNAUTHORIZED=${TLS_REJECT_UNAUTHORIZED:-false}
+      # Container-only bind; everything else comes from env_file.
+      - HTTP_HOST=0.0.0.0
     extra_hosts:
       - "host.docker.internal:host-gateway"
     restart: unless-stopped
