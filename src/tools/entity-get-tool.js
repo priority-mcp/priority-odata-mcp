@@ -46,6 +46,35 @@ export function registerEntityGetTool(registry, client) {
         const select = Array.isArray(args.select) ? args.select : undefined;
         const expand = args.expand ? String(args.expand) : undefined;
 
+        // Direct key access first: Priority serves ENTITY('1001') for string keys and ENTITY(12)
+        // for numeric ones. A key like '1001' looks numeric but belongs to a string field, so try
+        // the quoted form first and the bare number second, before guessing a lookup field.
+        if (args.key && !args.lookup) {
+            const rawKey = String(args.key).replace(/^'|'$/g, '');
+            const numericKey = parseNumericKey(rawKey);
+            const candidates = [client.formatODataValueStrict(rawKey)];
+            if (numericKey !== null) candidates.push(String(numericKey));
+            for (const keyExpr of candidates) {
+                try {
+                    if (typeof client.log === 'function') {
+                        client.log(`[entity_get] Trying direct key access ${entityName}(${keyExpr})`);
+                    }
+                    const result = await client.getEntityByKey(entityName, keyExpr, select, expand);
+                    if (result && typeof result === 'object') {
+                        result._mcp_metadata = result._mcp_metadata || {};
+                        result._mcp_metadata.directKeyUsed = true;
+                        result._mcp_metadata.keyValue = rawKey;
+                        result._mcp_metadata.keyExpr = keyExpr;
+                    }
+                    return result;
+                } catch (error) {
+                    const statusCode = error?.response?.status || error?.statusCode;
+                    if (statusCode === 404 || statusCode === 400) continue;
+                    throw error;
+                }
+            }
+        }
+
         // If key is provided and entity has a cached keyField, use it directly
         if (args.key && !args.lookup && client.keyFieldCache.has(entityName)) {
             const cachedKeyField = client.keyFieldCache.get(entityName);
